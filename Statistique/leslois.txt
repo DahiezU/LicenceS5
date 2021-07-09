@@ -1,0 +1,40 @@
+//////////////////loi uniforme//////////////////
+
+• unif() : pour la loi uniforme
+
+Probabilité d'arriver d'un intervalle
+
+//////////////////loi binomiale//////////////////
+
+• binom() : pour la loi binomiale
+
+probabilité de tomber 2 fois sur face sur 7 lancé d'une pièce
+
+
+//////////////////loi de Poisson//////////////////
+
+• pois() : pour la loi de Poisson
+
+Nombre d'évenement très grand et un échantillon très faible
+
+
+
+//////////////////loi géométrique//////////////////
+
+• geom() : pour la loi géométrique
+
+Pour determiner combien d'essaie de la loi de bernouillie serait nécéssaire
+
+//////////////////loi normale//////////////////
+
+• norm() : pour la loi normale
+
+Si c'est marqué gaussienne ou loi normale c'est la loi à prendre 
+
+[...une distribution normale.]
+
+//////////////////loi exponentielle//////////////////
+
+• exp() : pour la loi exponentielle
+
+Une loi exponentielle modélise la durée de vie d'un phénomène

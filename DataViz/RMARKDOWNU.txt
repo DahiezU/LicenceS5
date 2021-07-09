@@ -1,0 +1,124 @@
+## Niveau de sécurité du site en fonction de son son positionnement cartographique.
+
+Dans ces visualisations, nous voulons savoir si le positionnement et la taille de la ville de la ville influ sur sécurité du site
+Pour cela nous avons divisé la france en sud et nord en coupant la france sur sa ligne médiane.
+
+# Les villes de plus de 5000 habitant qui ont une https
+
+Dans les deux visualistations suivante, nous voulons voir si dans les villes de plus de 5000 habitants la difference de securtité est élevé : 
+
+'''{r}
+villeSecuInfo <- read_csv(file = "C:\\Users\\sburd\\Desktop\\CoursSDNL3S1\\DataViz\\ville_secu_informatique.csv")
+villeSecuInfohttpssup5000Nord <- filter(villeSecuInfo, Population > 5000  & Latitude > 46.3223)
+barplot(table(villeSecuInfohttpssup5000Nord$https),
+     col = c("red", "blue"),
+     main = paste("les", nrow(villeSecuInfohttpssup5000Nord), "villes de plus de 5000 habitants du nord qui ont une adresse https"),
+     ylim = c(0,2000),
+     xlab = "https",
+     ylab = "nombre de ville"
+)
+
+'''
+
+'''{r}
+villeSecuInfo <- read_csv(file = "C:\\Users\\sburd\\Desktop\\CoursSDNL3S1\\DataViz\\ville_secu_informatique.csv")
+villeSecuInfohttpssup5000Sud <- filter(villeSecuInfo, Population > 5000  & Latitude < 46.3223)
+barplot(table(villeSecuInfohttpssup5000Sud$https),
+        col = c("red", "blue"),
+        main = paste("les", nrow(villeSecuInfohttpssup5000Sud), "villes de plus de 5000 habitants du sud qui ont une adresse https"),
+        ylim = c(0,2000),
+        xlab = "https",
+        ylab = "nombre de ville"
+'''
+
+Nous Pouvons constater que dans le nord comme dans le sud, la plupart des sites de mairie ne sont pas sécurisé, il n'y a pas de difference significative.
+
+# Les villes de plus de 150 000 habitant qui ont une https
+
+Nous allons voir maintenant si la difference est significative pour les site de plus de 150 000 habitans 
+
+'''{r}
+villeSecuInfo <- read_csv(file = "C:\\Users\\sburd\\Desktop\\CoursSDNL3S1\\DataViz\\ville_secu_informatique.csv")
+villeSecuInfohttpssup150000Nord <- filter(villeSecuInfo, Population > 150000  & Latitude > 46.3223)
+barplot(table(villeSecuInfohttpssup150000Nord$https),
+    col = c("red", "blue"),
+    main = paste("les", nrow(villeSecuInfohttpssup150000Nord), "villes de plus de 150 000 habitants du nord qui ont une adresse https"),
+    ylim = c(0,15),
+    xlab = "https",
+    ylab = "nombre de ville"
+)
+'''
+
+'''{r}
+villeSecuInfo <- read_csv(file = "C:\\Users\\sburd\\Desktop\\CoursSDNL3S1\\DataViz\\ville_secu_informatique.csv")
+villeSecuInfohttpssup150000Sud <- filter(villeSecuInfo, Population > 150000  & Latitude < 46.3223)
+barplot(table(villeSecuInfohttpssup150000Sud$https),
+        col = c("red", "blue"),
+        main = paste("les", nrow(villeSecuInfohttpssup150000Sud), "villes de plus de 150 000 habitants du sud qui ont une adresse https"),
+        ylim = c(0,8),
+        xlab = "https",
+        ylab = "nombre de ville"
+)
+'''
+
+Pour les villes de plus de 150 000 habitants nous pouvons voir que les sites des mairies du sud sont considérablement plus sécurisé que pour les villes du nord alors qu'elles sont moins nombreuse. 
+
+#Difference de sécurité en fonction de l'application utilisé
+
+Dans ces visualisation nous allons voir si la difference de niveau de sécurité des différentes applications entre le nord et le sud  
+
+'''{r}
+villeSecuInfo <- read_csv(file = "C:\\Users\\sburd\\Desktop\\CoursSDNL3S1\\DataViz\\ville_secu_informatique.csv")
+villeSecuInfoSup5000Nord <- filter(villeSecuInfo, Population > 5000  & Latitude > 46.3223 & Application != "Inconnue" & Catégorie != "Inconnue")
+barplot(table(villeSecuInfoSup5000Nord$Catégorie, villeSecuInfoSup5000Nord$Application),
+        col = c("green", "yellow", "orange", "red"),
+        main = paste("les", nrow(villeSecuInfohttpssup5000Nord), "villes de plus de 5000 habitants du nord en fonction du l'aplication qu'elles utilisent"),
+        ylab = "nombre de ville",
+        las=3,
+        legend.text = c("à jour" ,'Information masqué ',  'Niveau de sécurité incertain',"Pas à jour" ),
+        args.legend = list(x = "topright"), xlim = c(0, 22)
+)
+
+'''
+
+'''{r}
+villeSecuInfo <- read_csv(file = "C:\\Users\\sburd\\Desktop\\CoursSDNL3S1\\DataViz\\ville_secu_informatique.csv")
+villeSecuInfoSup5000Sud <- filter(villeSecuInfo, Population > 5000  & Latitude < 46.3223 & Application != "Inconnue" & Catégorie != "Inconnue")
+barplot(table(villeSecuInfoSup5000Sud$Catégorie, villeSecuInfoSup5000Sud$Application),
+        col = c("green", "yellow", "orange", "red"),
+        main = paste("les", nrow(villeSecuInfohttpssup5000Sud), "villes de plus de 5000 habitants du sud en fonction du l'aplication qu'elles utilisent"),
+        ylab = "nombre de ville",
+        las=3,
+        legend.text = c("à jour" ,'Information masqué ',  'Niveau de sécurité incertain',"Pas à jour" ),
+        args.legend = list(x = "topright"), xlim = c(0, 22)
+)
+
+'''
+
+Dans un premier temps nous pouvons constater que dans le nord comme dans le sud ils utilisent à peu près les mêmes applications, à l'exception de Publish et TYPO3
+En suite nous pouvons voir que globalement le niveau de mise à jour est semblable dans le nord comme dans le sud.
+
+#par région
+
+Dans ce prochain graphique, nous voulions savoir quel était le département où la sécurité des sites de commune etait la plus élevé.
+
+'''{r}
+codeRegion <- substr(ville_secu_info$Code Insee,0,2)
+villeSecuInfoRegionhttps <- filter(villeSecuInfo)
+barplot(table(villeSecuInfo$https, codeRegion),
+        col = c("red", "blue"),
+        main = paste("les", nrow(villeSecuInfohttpssup5000Nord), "villes de plus de 5000 habitants du nord qui ont une adresse https"),
+        ylim = c(0,400),
+        xlab = "département",
+        ylab = "nombre de ville",
+        legend.text = c("sans https", "avec https"),
+        args.legend = list(x = "topright"), xlim = c(0, 22)
+        )
+'''
+
+Nous pouvons constater que c'est dans le département 33 qu'il y a le plus de https. mais nous pouvons encore constater que dans toute les régions, la sécurité des sites de communes n'est pas assez présente quelque soit le département.
+
+#Conclusion : 
+
+Avant l'analyse de ces données, je pensais que le nord de la france etait défarosisé par rapport au sud, car les villes et les régions y sont moins riche. Cependant l'analyse de ces données se sont montrées contradictoire. on remarque que globalement, les villes du nord ou du sud sont à peu près égaux. malgré une différence notable sur les grandes villes. en effet les sites des grandes villes du sud se montre plus rigoureux avec une majorité de sites https. Nous pouvons conclure après l'analyse de ces données seul pour les grandes villes, la position de la ville influ sur la sécurité du site qui lui ai attribué.
+

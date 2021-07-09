@@ -1,0 +1,58 @@
+---
+title: "Sécurité des Sites de Ville"
+author: "Dahiez Burdy"
+date: "02/12/2020"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(questionr)
+library(jsonlite)
+install.packages('maps')
+library(maps)
+map(database="world")
+```
+
+
+```{r setup, include=FALSE}
+library(dplyr)
+villeSecuInfo <- read.csv("C:\\Users\\dahie\\Documents\\DataViz\\projet_secu_info_ville\\ville_secu_informatique.csv")
+```
+
+## R Markdown
+
+#les villes ayant un site https sont les villes autours des métropoles,  car ce système est plus chère.
+
+```
+villeSecuInfohttpssup5000 <- filter(villeSecuInfo, Population > 5000)
+barplot(table(villeSecuInfohttpssup5000$https),
+     col = c("red", "blue"),
+     main = paste("les", nrow(villeSecuInfohttpssup5000), "villes de plus de 5000 habitants qui ont une adresse https"),
+     ylim = c(0,2000),
+     xlab = "https",
+     ylab = "nombre de ville"
+)
+villeSecuInfohttpssup150000 <- filter(villeSecuInfo, Population > 150000)
+barplot(table(villeSecuInfohttpssup150000$https),
+    col = c("red", "blue"),
+    main = paste("les", nrow(villeSecuInfohttpssup150000), "villes de plus de 150 000 habitants qui ont une adresse https"),
+    ylim = c(0,20),
+    xlab = "https",
+    ylab = "nombre de ville"
+
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

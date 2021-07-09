@@ -1,0 +1,48 @@
+@startuml
+class Compagnie {
+String name
+}
+class Vol {
+bool open
+Date arrivee
+Date depart
+Aeroport aeroArrivee
+Aeroport aeroDepart
+ArrayList<Passager> listePassager
+reserver(Passager p)
+annuler(Passager p)
+}
+
+class Client {
+int idCompte
+
+}
+class Passager {
+String name
+
+}
+
+class Aeroport {
+String name
+}
+class Escale {
+Date hArrivee
+Date hDepart
+}
+class Ville {
+String name
+}
+
+
+
+Compagnie "1..n" *-- "1..n" Vol
+Client "1" -- "1..n" Vol : reserver
+Reservation "1" *-- "1" Vol 
+Reservation "1" *-- "1" Passager
+Vol "1" *-- "1" Aeroport : arrivee
+Vol "1" *-- "1" Aeroport : depart
+Aeroport "1" <|-- "0..n" Escale
+Vol "1" *-- "0..n" Escale
+Aeroport "0..n" --* "1..n" Ville
+Client "1" -- "1..n" Passager
+@enduml

@@ -1,0 +1,43 @@
+
+
+
+sample(1:8, 1, T, c(0.1,0.1,0.1,0.1,0.1,0.1,0.2,0.2))
+
+
+"""
+Un pêcheur attrape en moyenne 3 poissons par heure. Soit Y une variable aléatoire indiquant le nombre de poissons 
+capturés en une heure.
+
+Calculez la probabilité que Y < 4
+
+"""
+
+punif(3,0,4)
+#ppois(4, lambda = 3, lower = TRUE)
+
+
+Un fournisseur d'une petite épicerie souhaite savoir s'il y a un lien entre l'achat de l'alcool 
+et l’achat de paquets de cacahuète et autres biscuits salés.
+
+Un tirage aléatoire sur les tickets de l'année écoulée donne :
+
+- ont acheté à la fois de l'alcool et de biscuits salés : 80 clients
+- ont acheté de l'alcool, mais pas de biscuits salés :  32 clients
+- ont acheté des biscuits salés, mais pas de l'alcool : 12 clients
+- n’ont acheté ni alcool ni biscuits salés : 12 clients
+
+Le fournisseur ne veut se tromper qu’une fois sur 100 en disant qu’il y a un lien entre ces deux types d’achats.
+Proposer un test statistique adapté au problème. Indiquez le p-value en réponse.
+
+
+
+nbObs = c(80, 32, 12, 12)
+prop.test(80, 32, 12, 12)$p.value
+
+x = c(80, 32, 12, 12)
+t.test(x, mu = 80)$p.value
+
+
+x1 = c(13.12, 13.54, 15.12, 14.51, 12.12, 13.10, 13.98, 11.21, 14.44)
+x2 = c(13.92, 13.89, 14.51, 14.78, 10.97, 14.18, 14.52, 11.54, 13.54)
+t.test(x1, x2)$p.value

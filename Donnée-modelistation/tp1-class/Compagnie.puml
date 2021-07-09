@@ -1,0 +1,8 @@
+@startuml
+class Compagnie {
+}
+class Vol {
+bool open
+}
+Compagnie "1..n" *-- "1..n" Vol : contains
+@enduml

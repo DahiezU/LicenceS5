@@ -1,0 +1,39 @@
+@startuml
+
+state Libre {
+
+}
+
+state Occupée {
+
+    state "enregistrement des articles" as ea
+    state "Choix du mode de paiement" as cp
+    state cmp <<choice>>
+    state "Attente paiement en liquide" as apl
+    state "Attente autorisation chèque" as aac
+    state "Attente autorisation cb" as acb
+    state "Paiement validé" as pv
+    state "Vente annulée" as va
+    state validation <<choice>>
+    state np <<choice>>
+
+}
+
+[*] --> Libre
+Libre --> ea
+ea --> cp
+cp --> cmp
+cmp --> apl : si choix en liquide
+cmp --> aac : si paiement chèque
+cmp --> acb : si paiement en cb
+acb --> validation
+aac --> validation
+apl --> validation
+validation --> pv : si paiement validé
+validation --> va : si paiement non valide
+va --> np
+np --> cp : si choix d'un nouveau paiement
+np --> [*] : abandon transaction
+pv --> [*]
+
+@enduml
